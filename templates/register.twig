@@ -1,0 +1,623 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+
+    <div class="container">
+        <br>
+        <input type="hidden" value="{{ user }}" id="user">
+        {% for cp in coupons %}
+            {% if loop.first %}
+                <form class="well form-horizontal ">
+                    <div class="text-center">
+
+                        <h4>คุณได้รับคูปองจำนวน {{ coupons|length  }} ใบ กรุณาบันทึกข้อมูล</h4>
+                    </div>
+                    <fieldset>
+                        <legend style="text-align: center">ลงทะเบียนรับสิทธิ์ ใบที่ {{ loop.index }}  </legend>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">ชื่อ</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input name="first_name" placeholder="First Name" class="form-control"
+                                           type="text" value="{{ cp.FirstName }}" id="firstName"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">นามสกุล</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input name="last_name" placeholder="Last Name" class="form-control" type="text"
+                                           value="{{ cp.LastName }}" id="lastName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">หมายเลขบัตรประชาชน</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-asterisk"></i></span>
+                                    <input name="idcard" placeholder="ID Card" class="form-control"
+                                           type="text" value="{{ cp.pers_idcard }}" id="idcard">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">เบอร์โทรศัพท์</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-earphone"></i></span>
+                                    <input name="phone" placeholder="Phone Number" class="form-control" type="tel"
+                                           value="{{ cp.Pers_PhoneNumber }}" id="phone">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">เพศ</label>
+                            <div class="col-md-4 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                    <select name="gender" class="form-control  " id="gender">
+                                        <option value="{{ cp.gender }}">{{ cp.gender }}</option>
+                                        <option value="ชาย">ชาย</option>
+                                        <option value="หญิง">หญิง</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">วัน / เดือน / ปี เกิด</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-calendar"></i></span>
+                                    <input name="birth_of_date" placeholder="ฺBirth of date" class="form-control"
+                                           type="text" id="birth_of_date"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">อีเมล์</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-envelope"></i></span>
+                                    <input name="email" placeholder="E-Mail Address" class="form-control"
+                                           type="email" id="email"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">ที่อยู่</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                    <textarea class="form-control" name="address" placeholder="บ้านเลขที่/หมูบ้าน" id="addr1"
+                                    >{{ cp.Addr_Address1 }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">หมู่ที่</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                    <input name="moo" placeholder="10/1" class="form-control" type="text"  value="{{ cp.Addr_Address2 }}" id="addr2">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">ซอย</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-home"></i></span>
+                                    <input name="soi" placeholder="ซอย" class="form-control" type="text"
+                                           value="{{ cp.Addr_Address3 }}" id="addr3" >
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">ถนน</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-home"></i></span>
+                                    <input name="rd" placeholder="ถนน" class="form-control" type="text"
+                                           value="{{ cp.Addr_Address4 }}" id="addr4">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Select Basic -->
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">จังหวัด</label>
+                            <div class="col-md-4 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                    <select name="provinces" class="form-control selectpicker provinces" id="provinces">
+                                        <option value="{{ cp.addr_province }}">{{ cp.addr_province }}</option>
+                                        {% for p in provinces %}
+                                            <option value="{{ p.PROVINCE_ID|e }}">{{ p.PROVINCE_NAME|e }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">อำเภอ</label>
+                            <div class="col-md-4 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                    <select name="amphures" class="form-control selectpicker amphures" id="amphures">
+                                        <option value="{{ cp.addr_district }}">{{ cp.addr_district }}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">ตำบล</label>
+                            <div class="col-md-4 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                    <select name="districts" class="form-control selectpicker districts" id="districts">
+                                        <option value="{{ cp.addr_subdistrict }}">{{ cp.addr_subdistrict }}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">รหัสไปรณีย์</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                    <input name="zipcode" placeholder="Zip Code" class="form-control" type="text" id="zipcode"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">สถานะภาพ</label>
+                            <div class="col-md-4 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                    <select name="pers_status" class="form-control  " id="pers_status">
+                                        <option value="{{ cp.pers_status }}">{{ cp.pers_status }}</option>
+                                        <option value="โสด">โสด</option>
+                                        <option value="สมรส">สมรส</option>
+                                        <option value="หย่า">หย่า</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">มีบุตรอายุต่ำกว่า 12 ปีหรือไม่</label>
+                            <div class="col-md-4 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                    <select name="children_under" class="form-control  " id="children_under">
+                                        <option value="{{ cp.children_under }}">{{ cp.children_under }}</option>
+                                        <option value="มี">มี</option>
+                                        <option value="ไม่มี">ไม่มี</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" id="{{ cp.pers_PersonID|e }}">
+                            <label class="col-md-4 control-label"></label>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-success saveBtn">บันทึก</button>
+                                <a href="#" class="btn btn-danger clearBtn">ล้างข้อมูล</a>
+                            </div>
+                        </div>
+                        <input type="hidden" name="coupon_id" value="{{ cp.coupon_id|e }}">
+                    </fieldset>
+                </form>
+            {% else %}
+
+
+            <form class="well form-horizontal ">
+                <fieldset>
+                    <legend style="text-align: center">ลงทะเบียนรับสิทธิ์ ใบที่ {{ loop.index }}   <button type="button" class="showHideForm">กรอกข้อมูล</button> <button type="button" class="copyBtn">Copy</button></legend>
+                    <div class="formRegister" style="display: none;">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">ชื่อ</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input name="first_name" placeholder="First Name" class="form-control"
+                                           type="text" value="{{ cp.FirstName }}"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">นามสกุล</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input name="last_name" placeholder="Last Name" class="form-control" type="text"
+                                           value="{{ cp.LastName }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">หมายเลขบัตรประชาชน</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-asterisk"></i></span>
+                                    <input name="idcard" placeholder="ID Card" class="form-control"
+                                           type="text" value="{{ cp.pers_idcard }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">เบอร์โทรศัพท์</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-earphone"></i></span>
+                                    <input name="phone" placeholder="Phone Number" class="form-control" type="tel"
+                                           value="{{ cp.Pers_PhoneNumber }}">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">เพศ</label>
+                            <div class="col-md-4 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                    <select name="gender" class="form-control  " >
+                                        <option value="{{ cp.gender }}">{{ cp.gender }}</option>
+                                        <option value="ชาย">ชาย</option>
+                                        <option value="หญิง">หญิง</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">วัน / เดือน / ปี เกิด</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-calendar"></i></span>
+                                    <input name="birth_of_date" placeholder="ฺBirth of date" class="form-control"
+                                           type="text"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">อีเมล์</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-envelope"></i></span>
+                                    <input name="email" placeholder="E-Mail Address" class="form-control"
+                                           type="email"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">ที่อยู่</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                    <textarea class="form-control" name="address" placeholder="บ้านเลขที่/หมูบ้าน"
+                                    >{{ cp.Addr_Address1 }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">หมู่ที่</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                    <input name="moo" placeholder="10/1" class="form-control" type="text"  value="{{ cp.Addr_Address2 }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">ซอย</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-home"></i></span>
+                                    <input name="soi" placeholder="ซอย" class="form-control" type="text"
+                                           value="{{ cp.Addr_Address3 }}"  >
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">ถนน</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-home"></i></span>
+                                    <input name="rd" placeholder="ถนน" class="form-control" type="text"
+                                           value="{{ cp.Addr_Address4 }}" >
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Select Basic -->
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">จังหวัด</label>
+                            <div class="col-md-4 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                    <select name="provinces" class="form-control selectpicker provinces" >
+                                        <option value="{{ cp.addr_province }}">{{ cp.addr_province }}</option>
+                                        {% for p in provinces %}
+                                            <option value="{{ p.PROVINCE_ID|e }}">{{ p.PROVINCE_NAME|e }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">อำเภอ</label>
+                            <div class="col-md-4 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                    <select name="amphures" class="form-control selectpicker amphures" >
+                                        <option value="{{ cp.addr_district }}">{{ cp.addr_district }}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">ตำบล</label>
+                            <div class="col-md-4 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                    <select name="districts" class="form-control selectpicker districts">
+                                        <option value="{{ cp.addr_subdistrict }}">{{ cp.addr_subdistrict }}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">รหัสไปรณีย์</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                    <input name="zipcode" placeholder="Zip Code" class="form-control" type="text"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">สถานะภาพ</label>
+                            <div class="col-md-4 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                    <select name="pers_status" class="form-control  ">
+                                        <option value="{{ cp.pers_status }}">{{ cp.pers_status }}</option>
+                                        <option value="โสด">โสด</option>
+                                        <option value="สมรส">สมรส</option>
+                                        <option value="หย่า">หย่า</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">มีบุตรอายุต่ำกว่า 12 ปีหรือไม่</label>
+                            <div class="col-md-4 selectContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                    <select name="children_under" class="form-control  " >
+                                        <option value="{{ cp.children_under }}">{{ cp.children_under }}</option>
+                                        <option value="มี">มี</option>
+                                        <option value="ไม่มี">ไม่มี</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="{{ cp.pers_PersonID|e }}">
+                            <label class="col-md-4 control-label"></label>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-success saveBtn">บันทึก</button>
+                                <a href="#" class="btn btn-danger clearBtn">ล้างข้อมูล</a>
+                            </div>
+                        </div>
+                        <input type="hidden" name="coupon_id" value="{{ cp.coupon_id|e }}">
+                    </div>
+
+                </fieldset>
+            </form>
+            {% endif %}
+        {% endfor %}
+
+
+    </div>
+    <div class="container">
+        <button type="button" class="btn btn-info btn-block" id="saveAllBtn">ส่งข้อมูลคูปอง </button>
+        <button type="button" class="btn btn-block" onclick="goBack()">กลับหน้าแรก</button>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        function goBack() {
+            window.location.replace("{{ base_url() }}/");
+        }
+        $(function () {
+
+            $('#saveAllBtn').click(function(e){
+                e.preventDefault();
+                window.location.replace("{{ base_url() }}/finish?user="+$("#user").val());
+            });
+
+            $("input[name='birth_of_date']").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+0",
+                dateFormat: 'yy-mm-dd'
+            });
+
+            $(".clearBtn").click(function (e) {
+                e.preventDefault();
+                $(this).closest('form').find("input[type=text], input[type=tel],textarea").val("");
+            });
+
+            $(".showHideForm").click(function (e) {
+                e.preventDefault();
+                $(this).closest('form').find(".formRegister").show();
+            });
+
+            $(".copyBtn").click(function (e) {
+                e.preventDefault();
+                $(this).closest('form').find("select").off('change');
+                $(this).closest('form').find("input[name='first_name']").first().val($("#firstName").val());
+                $(this).closest('form').find("input[name='last_name']").first().val($("#lastName").val());
+                $(this).closest('form').find("input[name='idcard']").first().val($("#idcard").val());
+                $(this).closest('form').find("input[name='phone']").first().val($("#phone").val());
+                $(this).closest('form').find("input[name='birth_of_date']").first().val($("#birth_of_date").val());
+                $(this).closest('form').find("select[name='gender']").first().val($("#gender").val()).change();
+                $(this).closest('form').find("input[name='email']").first().val($("#email").val());
+                $(this).closest('form').find("textarea[name='address']").first().val($("#addr1").val());
+                $(this).closest('form').find("input[name='moo']").first().val($("#addr2").val());
+                $(this).closest('form').find("input[name='soi']").first().val($("#addr3").val());
+                $(this).closest('form').find("input[name='rd']").first().val($("#addr4").val());
+                //$(this).closest('form').find("select[name='provinces']").first().val($("#provinces").val()).change();
+                $(this).closest('form').find("select[name='pers_status']").first().val($("#pers_status").val()).change();
+                $(this).closest('form').find("select[name='children_under']").first().val($("#children_under").val()).change();
+                $(this).closest('form').find("input[name='zipcode']").first().val($("#zipcode").val());
+
+                $(this).closest('form').find("select[name='provinces']").first().empty().append('<option selected="selected" value="'+$("#provinces").val()+'">'+$("#provinces option:selected").text()+'</option>');
+                $(this).closest('form').find("select[name='amphures']").first().empty().append('<option selected="selected" value="'+$("#amphures").val()+'">'+$("#amphures option:selected").text()+'</option>');
+                $(this).closest('form').find("select[name='districts']").first().empty().append('<option selected="selected" value="'+$("#districts").val()+'">'+$("#districts option:selected").text()+'</option>');
+                $(this).closest('form').find("select").on('change');
+            });
+
+            $(".saveBtn").click(function (e) {
+                e.preventDefault();
+
+                var btn = $(this);
+                var values = $(this).closest('form').serializeArray();
+                values.push({
+                    name: 'p',
+                    value: $(this).closest('form').find("select[name='provinces'] option:selected").text()
+                });
+                values.push({
+                    name: 'a',
+                    value: $(this).closest('form').find("select[name='amphures'] option:selected").text()
+                });
+                values.push({
+                    name: 'd',
+                    value: $(this).closest('form').find("select[name='districts'] option:selected").text()
+                });
+
+                $.ajax({
+                    url: "{{ base_url() }}/coupon/save",
+                    type: "post",
+                    data: values,
+                    success: function (response) {
+
+                        btn.notify(
+                            "บันทึกเรียบร้อยแล้ว",
+                            {
+                                position: "bottom",
+                                autoHideDelay: 2000,
+                                className: 'success'
+                            }
+                        );
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+                $(this).closest('form').find(".formRegister").hide();
+            });
+
+
+            $(".provinces").on('change', function () {
+                var pid = this.value;
+                var a = $(this).parent().parent().parent().next().children().find('select');
+                $.get("{{ base_url() }}/amphures/" + pid, function (data) {
+                    a.empty().append('<option selected="selected" value="">โปรดเลือกอำเภอ</option>');
+
+                    $.each(data, function (i, item) {
+                        a.append($('<option>', {
+                            value: item.AMPHUR_ID,
+                            text: item.AMPHUR_NAME
+                        }));
+                    });
+                }, "json");
+            });
+            $(".amphures").on('change', function () {
+                var pid = this.value;
+                var a = $(this).parent().parent().parent().next().children().find('select');
+                $.get("{{ base_url() }}/districts/" + pid, function (data) {
+                    a.empty().append('<option selected="selected" value="">โปรดเลือกตำบล</option>');
+                    $.each(data, function (i, item) {
+                        a.append($('<option>', {
+                            value: item.DISTRICT_ID,
+                            text: item.DISTRICT_NAME
+                        }));
+                    });
+                }, "json");
+            });
+            $(".districts").on('change', function () {
+                var pid = this.value;
+                $.get("{{ base_url() }}/d/" + pid, function (data) {
+                   // $(".zipcode").val(data.zip_code);
+                    console.log(data);
+                }, "json");
+            });
+        });
+    </script>
+{% endblock %}

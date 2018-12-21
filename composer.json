@@ -1,0 +1,22 @@
+{
+  "require": {
+    "slim/slim": "*",
+    "slim/twig-view": "*",
+    "twig/twig": "*",
+    "vlucas/valitron": "*",
+    "catfan/Medoo": "*",
+    "aura/session": "*",
+    "kittinan/php-line-notify": "*",
+    "crada/php-apidoc": "@dev",
+    "lcobucci/jwt": "*"
+  },
+  "autoload": {
+    "psr-0": {
+      "": "src"
+    },
+    "files": [
+      "xcrud/functions.php",
+      "xcrud/xcrud.php"
+    ]
+  }
+}

@@ -1,0 +1,206 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+    <br>
+    <style>
+        .print {
+            padding: 6px;
+            font-size: 14px;
+        }
+    </style>
+    <div class="container" style="background-color: #ffffff">
+        <h4>Print Form</h4>
+        <button type="button" class="printBtnAll">Print All</button>
+        <button type="button" class="printBtnAllBlank">Print All Blank</button>
+        <button type="button" class="showReprint">Show Button RePrint</button>
+        Print Status :
+        <select id="cpType">
+            <option>เลือก</option>
+            <option value="all">ทั้งหมด</option>
+            <option value="n">ยังไม่ได้ปริ้น</option>
+            <option value="y">ปริ้นแล้ว</option>
+        </select>
+        <div id="printAll">
+            {% for cp in coupons %}
+                <form class="cpForm">
+                    <div class="print">
+                        <div align="center">
+                            <span style="font-weight: bold">Montra of Starlight 2019</span><br>
+                            <span style="font-size: 10px; ">15/11/2018 - 05/01/2019</span>
+                        </div>
+                        <span style="font-size: 10px; " class="firstNameLine">ชื่อ : {{ cp.FirstName }}</span><br>
+                        <span style="font-size: 10px; " class="lastNameLine">นามสกุล : {{ cp.LastName }}</span><br>
+                        <span style="font-size: 10px; " class="idCardLine">ID Card : {{ cp.pers_idcard }}</span><br>
+                        <span style="font-size: 10px;display: none " class="emailLine"><br></span>
+                        <span style="font-size: 10px; " class="phoneLine">เบอร์โทร : {{ cp.Pers_PhoneNumber }}</span><br>
+                        <span style="font-size: 10px; " >Coupon ID : {{ cp.pers_PersonID }}-{{ cp.coupon_id|e }} - <span
+                                    class="printCount">{{ cp.printCount }}</span></span><br>
+                        <span style="font-size: 10px; ">Print : <span class="printTime"></span> </span><br>
+                        <br>
+                        <br>
+                    </div>
+                    <p class="printStatus">
+                        Print Status : {{ cp.printStatus }} || Last Print : {{ cp.printLastTime }}
+                    </p>
+                    <input type="text" name="notes" placeholder="notes" class="notesTextbox">
+                    <input type="hidden" name="cid" value="{{ cp.coupon_id|e }}">
+                    <button type="button" class="printBtn">Print ID : {{ cp.coupon_id|e }}</button>
+                    <button type="button" class="printBlankBtn">Print Blank ID : {{ cp.coupon_id|e }}</button>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="container">
+        <button type="button" class="btn btn-block" onclick="goBack()">กลับหน้าแรก</button>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        function goBack() {
+            window.location.replace("{{ base_url() }}/staff");
+        }
+
+        function goBackEdit() {
+            window.history.back();
+        }
+        $('#cpType').on('change', function() {
+            window.location.replace("{{ base_url() }}/print?user={{ user }}&cptype="+this.value);
+        });
+        $(function () {
+
+
+            $(".printBtn").click(function () {
+
+                var currentdate = new Date();
+                var datetime = currentdate.getDate() + "/"
+                    + (currentdate.getMonth()+1)  + "/"
+                    + currentdate.getFullYear() + " @ "
+                    + currentdate.getHours() + ":"
+                    + currentdate.getMinutes() + ":"
+                    + currentdate.getSeconds();
+                $(".printTime").text(datetime);
+                var pc = $(this).closest('form').find(".printCount").text();
+                $(this).closest('form').find(".printCount").text(parseInt($(this).closest('form').find(".printCount").text()) + 1);
+                $(this).closest('form').find(".print").printThis();
+
+                var values = $(this).closest('form').serialize();
+                $.ajax({
+                    url: "{{ base_url() }}/coupon/print/save",
+                    type: "post",
+                    data: values,
+                    success: function (response) {
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+
+            });
+
+            $(".printBlankBtn").click(function () {
+
+                var currentdate = new Date();
+                var datetime = currentdate.getDate() + "/"
+                    + (currentdate.getMonth()+1)  + "/"
+                    + currentdate.getFullYear() + " @ "
+                    + currentdate.getHours() + ":"
+                    + currentdate.getMinutes() + ":"
+                    + currentdate.getSeconds();
+                $(".printTime").text(datetime);
+                var pc = $(this).closest('form').find(".printCount").text();
+                $(this).closest('form').find(".printCount").text(parseInt($(this).closest('form').find(".printCount").text()) + 1);
+                $(this).closest('form').find(".print").printThis();
+                $(this).closest('form').find(".firstNameLine").html('ชื่อ.........................................');
+                $(this).closest('form').find(".lastNameLine").html('นามสกุล.................................');
+                $(this).closest('form').find(".idCardLine").html('ที่อยู่ : ...................................<br>............................................<br>............................................');
+                $(this).closest('form').find(".emailLine").html('Email...................................<br>');
+                $(this).closest('form').find(".emailLine").show();
+                $(this).closest('form').find(".phoneLine").html('เบอร์โทร.................................');
+                var values = $(this).closest('form').serialize();
+                $.ajax({
+                    url: "{{ base_url() }}/coupon/print/save",
+                    type: "post",
+                    data: values,
+                    success: function (response) {
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+
+            });
+
+            $(".showReprint").click(function () {
+                $(".notesTextbox").show();
+                $(".printBtn").show();
+                $(".printStatus").show();
+                $(".printBlankBtn").show();
+                //$(".print").show();
+            });
+            $(".printBtnAll").click(function () {
+                var currentdate = new Date();
+                var datetime = currentdate.getDate() + "/"
+                    + (currentdate.getMonth()+1)  + "/"
+                    + currentdate.getFullYear() + " @ "
+                    + currentdate.getHours() + ":"
+                    + currentdate.getMinutes() + ":"
+                    + currentdate.getSeconds();
+                $(".printTime").text(datetime);
+                $(".notesTextbox").hide();
+                $(".printBtn").hide();
+                $(".printStatus").hide();
+                $(".printBlankBtn").hide();
+                $('#printAll').printThis();
+                $.ajax({
+                    url: "{{ base_url() }}/coupon/print/all?user={{ user }}",
+                    type: "get",
+                    success: function (response) {
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+                //$(".print").show();
+            });
+
+            $(".printBtnAllBlank").click(function () {
+                var currentdate = new Date();
+                var datetime = currentdate.getDate() + "/"
+                    + (currentdate.getMonth()+1)  + "/"
+                    + currentdate.getFullYear() + " @ "
+                    + currentdate.getHours() + ":"
+                    + currentdate.getMinutes() + ":"
+                    + currentdate.getSeconds();
+                $(".printTime").text(datetime);
+                $(".notesTextbox").hide();
+                $(".printBtn").hide();
+                $(".printStatus").hide();
+                $(".printBlankBtn").hide();
+                $(".firstNameLine").html('ชื่อ.........................................');
+                $(".lastNameLine").html('นามสกุล.................................');
+                $(".idCardLine").html('ที่อยู่ : ...................................<br>............................................<br>............................................');
+                $(".emailLine").html('Email...................................<br>');
+                $(".emailLine").show();
+                $(".phoneLine").html('เบอร์โทร.................................');
+                $('#printAll').printThis();
+                $.ajax({
+                    url: "{{ base_url() }}/coupon/print/all?user={{ user }}",
+                    type: "get",
+                    success: function (response) {
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                    }
+                });
+                //$(".print").show();
+            });
+        });
+    </script>
+{% endblock %}

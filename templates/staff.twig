@@ -1,0 +1,64 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+    <br>
+    <div class="container">
+        <form class="well form-horizontal"   >
+            <fieldset>
+                <legend style="text-align: center">IDCard Or Member Card !</legend>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label"> </label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-user"></i></span>
+                            <input name="user"  class="form-control" type="text"
+                                   id="user">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label"></label>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-info btn-block" id="findBtn">ค้นหา ! </button>
+                    </div>
+                </div>
+                <div id="txtStatus" class="text-center">
+                </div>
+                <div>
+                    <ul>
+                        <li>idcard : 3350300563991</li>
+                        <li>idcard : 3140600058003</li>
+                        <li>idcard : 1101401970688</li>
+                        <li>member card : 0000701000000000060</li>
+                        <li>member card : 0000000000000000007</li>
+                    </ul>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        $(function () {
+            $('#findBtn').click(function(e){
+                e.preventDefault();
+                if ($("#user").val() == "") {
+                    $("#txtStatus").text('กรุณากรอกข้อมูลด้วยค่ะ');
+                    return;
+                }
+                $.getJSON( "{{ base_url() }}/api/check/privilege?user="+$("#user").val(), function( data ) {
+                    if (data.code == 0) {
+                        $("#txtStatus").text('ไม่มีข้อมูลคูปอง');
+                    } else {
+                        window.location.replace("{{ base_url() }}/print?user="+$("#user").val());
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
